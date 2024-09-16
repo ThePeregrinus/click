@@ -7,15 +7,15 @@
   <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <script>
-    AFRAME.registerComponent("linkcomponent", {
+    AFRAME.registerComponent('linkcomponent', {
       schema: {
-        link: { type: "string", default: "" },
+        link: { type: 'string', default: '' },
       },
 
       init: function () {
-        this.el.addEventListener("click", (e) => {
-          alert(`click to ${this.data.link}`);
-          window.location.href = this.data.link;
+        this.el.addEventListener('click', (e) => {
+          const redirect = confirm(`click to ${this.data.link} ?`);
+          if (redirect) window.location.href = this.data.link;
         });
       },
     });
