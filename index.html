@@ -8,11 +8,16 @@
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js"></script>
   <script>
-    AFRAME.registerComponent("click-to-google", {
+    AFRAME.registerComponent("linkcomponent", {
+
+  schema: {
+    link: {type: 'string', default: ''}
+  },
+
   init: function() {
     this.el.addEventListener("click", e => {
-      alert("click to google");
-      window.location.href = 'https://google.com';
+      alert(`click to ${this.data.link}`);
+      window.location.href = this.data.link;
     });
   }
 });
@@ -41,9 +46,9 @@ AFRAME.registerComponent("click-to-yandex", {
   </a-assets>
 
   <a-marker preset="hiro" raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;" id="markerA" markerhandler>
-    <a-box src="#yandex" scale="0.3 0.3 0.3" click-to-yandex position="-0.4 0 0" >
+    <a-box src="#yandex" scale="0.3 0.3 0.3" linkcomponent="link: https://yandex.ru" position="-0.4 0 0" >
     </a-box>
-    <a-box src="#google" scale="0.3 0.3 0.3" click-to-google position="0.4 0 0" >
+    <a-box src="#google" scale="0.3 0.3 0.3" linkcomponent="link: https://google.com" position="0.4 0 0" >
     </a-box>
     </a-marker>
 
