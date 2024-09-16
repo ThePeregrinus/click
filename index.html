@@ -19,6 +19,16 @@
         });
       },
     });
+
+    AFRAME.registerComponent('opencomponent', {
+      init: function () {
+        let toogleOpen = true;
+        this.el.addEventListener('click', (e) => {
+          document.getElementById('hidden_ents').setAttribute('visible', toogleOpen);
+          toogleOpen = !toogleOpen;
+        });
+      },
+    });
   </script>
 
   <body style="margin: 0px; overflow: scroll">
@@ -42,47 +52,51 @@
         id="markerA"
         markerhandler
       >
-        <a-box
-          src="#yandex"
-          scale="0.3 0.3 0.3"
-          linkcomponent="link: https://yandex.ru"
-          position="1.5 0 2"
-        >
-        </a-box>
-        <a-box
-          src="#yandex"
-          scale="0.3 0.3 0.3"
-          linkcomponent="link: https://yandex.ru"
-          position="1.5 -1 5"
-        >
-        </a-box>
-        <a-box
-          src="#yandex"
-          scale="0.3 0.3 0.3"
-          linkcomponent="link: https://yandex.ru"
-          position="2 -3 -3"
-        >
-        </a-box>
-        <a-box
-          src="#google"
-          scale="0.3 0.3 0.3"
-          linkcomponent="link: https://google.com"
-          position="-1.5 0 2"
-        >
-        </a-box>
-        <a-box
-          src="#google"
-          scale="0.3 0.3 0.3"
-          linkcomponent="link: https://google.com"
-          position="-2 3 2"
-        >
-        </a-box>
-        <a-box
-          src="#google"
-          scale="0.3 0.3 0.3"
-          linkcomponent="link: https://google.com"
-          position="-2 1 -10"
-        >
+        <a-box src="#yandex" scale="0.3 0.3 0.3" opencomponent position="0 0 0">
+          <a-entity id="hidden_ents" visible="false">
+            <a-box
+              src="#yandex"
+              scale="0.3 0.3 0.3"
+              linkcomponent="link: https://yandex.ru"
+              position="1.5 0 2"
+            >
+            </a-box>
+            <a-box
+              src="#yandex"
+              scale="0.3 0.3 0.3"
+              linkcomponent="link: https://yandex.ru"
+              position="1.5 -1 5"
+            >
+            </a-box>
+            <a-box
+              src="#yandex"
+              scale="0.3 0.3 0.3"
+              linkcomponent="link: https://yandex.ru"
+              position="2 -3 -3"
+            >
+            </a-box>
+            <a-box
+              src="#google"
+              scale="0.3 0.3 0.3"
+              linkcomponent="link: https://google.com"
+              position="-1.5 0 2"
+            >
+            </a-box>
+            <a-box
+              src="#google"
+              scale="0.3 0.3 0.3"
+              linkcomponent="link: https://google.com"
+              position="-2 3 2"
+            >
+            </a-box>
+            <a-box
+              src="#google"
+              scale="0.3 0.3 0.3"
+              linkcomponent="link: https://google.com"
+              position="-2 1 -10"
+            >
+            </a-box>
+          </a-entity>
         </a-box>
       </a-marker>
 
