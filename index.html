@@ -1,106 +1,28 @@
-<! doctype HTML>
-<html>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="stylesheet" type="text/css" href="index.css" />
+<head>
+  <title>@artcom/react-three-arjs example</title>
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+  />
 
-  <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  <script>
-    AFRAME.registerComponent('linkcomponent', {
-      schema: {
-        link: { type: 'string', default: '' },
-      },
+  <style>
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+      overflow: hidden;
+    }
+  </style>
+  <!-- <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+  <script src="./events.js"></script> -->
+  <script type="module" crossorigin src="/assets/index-7TxJsMLP.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DSArwjbp.css">
+</head>
 
-      init: function () {
-        this.el.addEventListener('click', (e) => {
-          const redirect = confirm(`click to ${this.data.link} ?`);
-          if (redirect) window.location.href = this.data.link;
-        });
-      },
-    });
-
-    AFRAME.registerComponent('opencomponent', {
-      init: function () {
-        let toogleOpen = true;
-        this.el.addEventListener('click', (e) => {
-          document.getElementById('hidden_ents').setAttribute('visible', toogleOpen);
-          toogleOpen = !toogleOpen;
-        });
-      },
-    });
-  </script>
-
-  <body style="margin: 0px; overflow: scroll">
-    <a-scene
-      vr-mode-ui="enabled: false;"
-      renderer="logarithmicDepthBuffer: true;"
-      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
-      id="scene"
-      cursor="fuse: false; rayOrigin: mouse;"
-    >
-      <a-assets>
-        <img id="google" src="go.png" />
-        <img id="yandex" src="ya.png" />
-      </a-assets>
-
-      <a-marker
-        preset="hiro"
-        raycaster="objects: .clickable"
-        emitevents="true"
-        cursor="fuse: false; rayOrigin: mouse;"
-        id="markerA"
-        markerhandler
-      >
-        <a-box src="#yandex" scale="0.3 0.3 0.3" opencomponent position="0 0 0">
-          <a-entity id="hidden_ents" visible="false">
-            <a-box
-              src="#yandex"
-              scale="0.3 0.3 0.3"
-              linkcomponent="link: https://yandex.ru"
-              position="1.5 0 2"
-            >
-            </a-box>
-            <a-box
-              src="#yandex"
-              scale="0.3 0.3 0.3"
-              linkcomponent="link: https://yandex.ru"
-              position="1.5 -1 5"
-            >
-            </a-box>
-            <a-box
-              src="#yandex"
-              scale="0.3 0.3 0.3"
-              linkcomponent="link: https://yandex.ru"
-              position="2 -3 -3"
-            >
-            </a-box>
-            <a-box
-              src="#google"
-              scale="0.3 0.3 0.3"
-              linkcomponent="link: https://google.com"
-              position="-1.5 0 2"
-            >
-            </a-box>
-            <a-box
-              src="#google"
-              scale="0.3 0.3 0.3"
-              linkcomponent="link: https://google.com"
-              position="-2 3 2"
-            >
-            </a-box>
-            <a-box
-              src="#google"
-              scale="0.3 0.3 0.3"
-              linkcomponent="link: https://google.com"
-              position="-2 1 -10"
-            >
-            </a-box>
-          </a-entity>
-        </a-box>
-      </a-marker>
-
-      <a-entity camera></a-entity>
-    </a-scene>
-  </body>
-</html>
+<body>
+  <div id="root"></div>
+
+</body>
