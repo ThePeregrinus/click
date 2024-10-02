@@ -20,13 +20,19 @@
       },
     });
 
-    AFRAME.registerComponent('opencomponent', {
+    aframeRef.current.registerComponent('opencomponent', {
       init: function () {
         let toogleOpen = true;
-        this.el.addEventListener('click', (e) => {
-          document.getElementById('hidden_ents').setAttribute('visible', toogleOpen);
-          toogleOpen = !toogleOpen;
-        });
+        this.el.addEventListener(
+          'click',
+          (e) => {
+            if (this.el !== e.target) return;
+
+            document.getElementById('hidden_ents')?.setAttribute('visible', `${toogleOpen}`);
+            toogleOpen = !toogleOpen;
+          },
+          false,
+        );
       },
     });
   </script>
@@ -53,7 +59,7 @@
         markerhandler
       >
         <a-box src="#yandex" scale="1 1 1" opencomponent position="0 0 0">
-          <a-entity id="hidden_ents" visible="false">
+          <a-entity id="hidden_ents">
             <a-box
               src="#yandex"
               scale="1 1 1"
