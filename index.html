@@ -20,13 +20,19 @@
       },
     });
 
-    AFRAME.registerComponent('opencomponent', {
+    aframeRef.current.registerComponent('opencomponent', {
       init: function () {
         let toogleOpen = true;
-        this.el.addEventListener('click', (e) => {
-          document.getElementById('hidden_ents').setAttribute('visible', toogleOpen);
-          toogleOpen = !toogleOpen;
-        });
+        this.el.addEventListener(
+          'click',
+          (e) => {
+            if (this.el !== e.target) return;
+
+            document.getElementById('hidden_ents')?.setAttribute('visible', `${toogleOpen}`);
+            toogleOpen = !toogleOpen;
+          },
+          false,
+        );
       },
     });
   </script>
