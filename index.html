@@ -212,7 +212,11 @@
         </div>
       </div>
     </div>
-    <a-scene embedded arjs cursor="fuse: false; rayOrigin: mouse;">
+    <a-scene
+      embedded
+      arjs="sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;"
+      cursor="fuse: false; rayOrigin: mouse;"
+    >
       <a-assets>
         <img id="google" src="go.png" />
         <img id="yandex" src="ya.png" />
