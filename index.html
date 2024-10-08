@@ -25,40 +25,21 @@
       const modal = (document.querySelector(".wrapper").style.display = "flex");
     }
 
-    function firstTab() {
+    function handleTab(tabIndex) {
       const tabs = document.querySelectorAll(".tab");
-      const contentitems = document.querySelectorAll(".main-content-item");
-      tab = tabs[0];
-      if (tab.classList.contains("tab-inactive")) {
-        tab.classList.remove("tab-inactive");
-        tab.classList.add("tab-active");
+      const contentItems = document.querySelectorAll(".main-content-item");
 
-        //and others items
-        contentitems[0].classList.remove("hiden-item");
-        contentitems[1].classList.add("hiden-item");
-      }
-      //and others
-      tabs[1].classList.remove("tab-active");
-      tabs[1].classList.add("tab-inactive");
-    }
+      // Reset all tabs and content items
+      tabs.forEach((tab, index) => {
+        tab.classList.remove("tab-active");
+        tab.classList.add("tab-inactive");
+        contentItems[index].classList.add("hidden-item");
+      });
 
-    function secondTab() {
-      const tabs = document.querySelectorAll(".tab");
-      const contentitems = document.querySelectorAll(".main-content-item");
-      tab = tabs[1];
-
-      if (tab.classList.contains("tab-inactive")) {
-        tab.classList.remove("tab-inactive");
-        tab.classList.add("tab-active");
-
-        //and others items
-        contentitems[0].classList.add("hiden-item");
-        contentitems[1].classList.remove("hiden-item");
-      }
-
-      //and others
-      tabs[0].classList.remove("tab-active");
-      tabs[0].classList.add("tab-inactive");
+      // Activate the selected tab and its corresponding content item
+      tabs[tabIndex].classList.remove("tab-inactive");
+      tabs[tabIndex].classList.add("tab-active");
+      contentItems[tabIndex].classList.remove("hidden-item");
     }
   </script>
   <script>
@@ -179,7 +160,7 @@
       cursor: pointer;
     }
 
-    .hiden-item {
+    .hidden-item {
       display: none;
     }
   </style>
@@ -198,10 +179,10 @@
           </div>
           <div class="main">
             <div class="tabs">
-              <div onclick="firstTab()" class="tab tab-active">
+              <div onclick="handleTab(0)" class="tab tab-active">
                 Первая вкладка
               </div>
-              <div onclick="secondTab()" class="tab tab-inactive">
+              <div onclick="handleTab(1)" class="tab tab-inactive">
                 Вторая вкладка
               </div>
             </div>
@@ -216,7 +197,7 @@
                     <img src="go.svg" alt="open md" />
                   </div>
                 </div>
-                <div class="main-content-item hiden-item">
+                <div class="main-content-item hidden-item">
                   <div class="main-content-text">Короткое название 2</div>
                   <div
                     class="main-content-button"
