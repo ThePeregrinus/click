@@ -15,41 +15,246 @@
           // changing your 3D model source, size, position and so on
           // or you can just open links, trigger actions...
         });
+
+      const marker = document.querySelector("a-marker");
+      const notificationMessage = document.querySelector(
+        ".notification-wrapper"
+      );
+
+      marker.addEventListener("markerFound", (e) => {
+        notificationMessage.style.display = "none";
+      });
+
+      marker.addEventListener("markerLost", (e) => {
+        notificationMessage.style.display = "flex";
+      });
+
+      fetch("https://theperegrinus.github.io/pointsJSON/points.json")
+        .then((res) => res.json())
+        .then((res) => {
+          // i = 0;
+          // res.points.map((point) => {
+          //   const stringPoint = point.join(" ");
+          //   console.info(stringPoint);
+          //   const entity = document.createElement("a-entity");
+          //   entity.setAttribute("rotation", "-90 180 0");
+          //   entity.setAttribute("position", stringPoint);
+          //   entity.setAttribute("material", "src: #info");
+          //   entity.setAttribute("geometry", "primitive: circle; radius: 0.2");
+          //   entity.setAttribute("infocomponent", "");
+          //   entity.addEventListener("click", () => openModal());
+
+          //   marker.appendChild(entity);
+          // });
+
+          res = {
+            "Блок предохранителей": {
+              coordinates: {
+                x: 4.43,
+                y: -3.0,
+                z: 0.0,
+              },
+              "technical map": [
+                {
+                  title: "Опустить облицовочную панель кабины",
+                  code: "CODECODECODE",
+                },
+                {
+                  title: "Пример технической карты",
+                  code: "CODECODECODE",
+                },
+                {
+                  title: "Пример технической карты2",
+                  code: "CODECODECODE",
+                },
+              ],
+              catalog: [
+                {
+                  title: "Пример каталога",
+                  code: "CODECODECODE",
+                },
+                {
+                  title: "Пример каталога2",
+                  code: "CODECODECODE",
+                },
+              ],
+            },
+            "Колонка рулевого управления": {
+              coordinates: {
+                x: 0,
+                y: 0,
+                z: 0,
+              },
+              "technical map": [
+                {
+                  title: "Установить настил рамы грязевой средний",
+                  code: "SOMECODECODE",
+                },
+              ],
+              catalog: [
+                {
+                  title: "Замок",
+                  code: "C0DE",
+                },
+              ],
+            },
+          };
+          for (const key in res) {
+            if (res.hasOwnProperty(key)) {
+              const item = res[key];
+
+              const title = key;
+
+              const coords = `${item.coordinates.x} ${item.coordinates.y} ${item.coordinates.z}`;
+
+              const techmap = item["technical map"];
+
+              const catalog = item.catalog;
+
+              console.info(coords);
+              const entity = document.createElement("a-entity");
+              entity.setAttribute("rotation", "-90 180 0");
+              entity.setAttribute("position", coords);
+              entity.setAttribute("material", "src: #info");
+              entity.setAttribute("geometry", "primitive: circle; radius: 0.2");
+              entity.setAttribute("infocomponent", "");
+              entity.addEventListener("click", () => openModal(title, item));
+
+              marker.appendChild(entity);
+
+              // console.log(
+              //   "item",
+              //   item,
+              //   "title",
+              //   title,
+              //   "coords",
+              //   coords,
+              //   "techmap",
+              //   techmap,
+              //   "catalog",
+              //   catalog
+              // );
+            }
+          }
+        });
     };
 
     function closeModal() {
       const modal = (document.querySelector(".wrapper").style.display = "none");
     }
 
-    function openModal() {
+    function openModal(title, obj) {
       const modal = (document.querySelector(".wrapper").style.display = "flex");
+
+      const headerText = document.querySelector(".header-text");
+      headerText.textContent = title;
+
+      const { "technical map": technicalMap, catalog } = obj;
+
+      // Create the main-content-items div
+      const mainContentItems = document.createElement("div");
+      mainContentItems.className = "main-content-items";
+
+      // Create main content item div
+
+      for (let i = 0; i < 5; i++) {
+        const mainContentItem = document.createElement("div");
+        mainContentItem.className = "main-content-item";
+
+        // Create the main-content-text div
+        const mainContentText = document.createElement("div");
+        mainContentText.className = "main-content-text";
+        mainContentText.textContent = "Технические характеристики автомобиля";
+        mainContentText.onclick = () => {
+          window.open("https://example.com");
+        };
+
+        // Create the main-content-button img
+        const mainContentButton = document.createElement("img");
+        mainContentButton.className = "main-content-button";
+        mainContentButton.src = "go.svg";
+        mainContentButton.alt = "open md";
+
+        // Append the text and image to the main-content-item div
+        mainContentItem.appendChild(mainContentText);
+        mainContentItem.appendChild(mainContentButton);
+
+        mainContentItems.append(mainContentItem);
+      }
+      // Append the main-content-item to the body or any other container
+      const container = document.querySelector(".main-content-container");
+      container.appendChild(mainContentItems);
+
+      //----------------------------------catalog
+
+      const mainHiddenContentItems = document.createElement("div");
+      mainHiddenContentItems.className = "main-content-items hidden-item";
+      for (let i = 0; i < 5; i++) {
+        const mainContentItem = document.createElement("div");
+        mainContentItem.className = "main-content-item";
+
+        // Create the main-content-text div
+        const mainContentText = document.createElement("div");
+        mainContentText.className = "main-content-text";
+        mainContentText.textContent = "Каталог";
+        mainContentText.onclick = () => {
+          window.open("https://example.com");
+        };
+
+        // Create the main-content-button img
+        const mainContentButton = document.createElement("img");
+        mainContentButton.className = "main-content-button";
+        mainContentButton.src = "go.svg";
+        mainContentButton.alt = "open md";
+
+        // Append the text and image to the main-content-item div
+        mainContentItem.appendChild(mainContentText);
+        mainContentItem.appendChild(mainContentButton);
+
+        mainHiddenContentItems.append(mainContentItem);
+      }
+
+      container.appendChild(mainHiddenContentItems);
+      console.log(technicalMap, catalog);
     }
 
     function handleTab(tabIndex) {
       const tabs = document.querySelectorAll(".tab");
-      const contentItems = document.querySelectorAll(".main-content-item");
+      const contentItems = document.querySelectorAll(".main-content-items");
 
-      // Reset all tabs and content items
       tabs.forEach((tab, index) => {
         tab.classList.remove("tab-active");
         tab.classList.add("tab-inactive");
         contentItems[index].classList.add("hidden-item");
       });
 
-      // Activate the selected tab and its corresponding content item
       tabs[tabIndex].classList.remove("tab-inactive");
       tabs[tabIndex].classList.add("tab-active");
       contentItems[tabIndex].classList.remove("hidden-item");
+    }
+
+    function closeOrientationalModal() {
+      const modal = document.querySelector(".wrapper-orientation-alert");
+      modal.style.display = "none";
+
+      const bodyElements = document.querySelectorAll(
+        "body > *:not(.wrapper-orientation-alert)"
+      );
+      bodyElements.forEach((element) => {
+        element.style.filter = "none";
+      });
     }
   </script>
   <script>
     AFRAME.registerComponent("infocomponent", {
       schema: {
         link: { type: "string", default: "" },
+        name: { type: "string", default: "herohoehero" },
       },
 
       init: function () {
-        this.el.addEventListener("click", openModal);
+        console.log(this.el);
+        // this.el.addEventListener("click", () => openModal(this.data.name));
       },
     });
   </script>
@@ -66,23 +271,17 @@
       height: 100%;
       display: none;
       justify-content: flex-end;
-      z-index: 1;
+      z-index: 2;
     }
 
     .modal {
+      display: flex;
       width: 50%;
       background-color: #0d54a1;
-      overflow-y: auto;
-    }
-
-    @media screen and (max-width: 1400px) {
-      .modal {
-        width: 100%;
-        background-color: #0d54a1;
-      }
     }
 
     .modal-content {
+      width: 100%;
       height: 100%;
       margin: 30px 40px;
       color: white;
@@ -98,10 +297,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 30px;
     }
 
     .header-close-button {
+      box-sizing: content-box;
       cursor: pointer;
       padding: 18px;
     }
@@ -131,6 +330,7 @@
     .tab {
       padding: 15px 20px;
       border-radius: 10px 10px 0 0;
+      flex-grow: 1;
     }
 
     .main-content {
@@ -140,21 +340,33 @@
       flex-direction: column;
       border-radius: 4px;
       flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .main-content::-webkit-scrollbar {
+      display: none;
     }
 
     .main-content-container {
       display: flex;
       flex-direction: column;
+      margin: 20px 20px;
+      gap: 5px;
+    }
+
+    .main-content-items {
     }
 
     .main-content-item {
+      margin-top: 5px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 20px 20px;
       cursor: pointer;
     }
+
     .main-content-button {
+      box-sizing: content-box;
       background-color: #437dff;
       padding: 25.71px 32.14px 25.71px 35.36px;
       border-radius: 16px;
@@ -163,8 +375,188 @@
     .hidden-item {
       display: none;
     }
+
+    .wrapper-orientation-alert {
+      font-family: "Arial";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: flex-end;
+      z-index: 999;
+    }
+
+    .modal-alert {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
+      font-size: 40px;
+      background-color: #12121280;
+    }
+
+    .phone-img {
+      margin: auto;
+    }
+
+    .modal-alert-container {
+      margin: 0 35px 35px 35px;
+      padding: 40px;
+      border-radius: 10.52px;
+      display: flex;
+      gap: 40px;
+      flex-direction: column;
+      background-color: #ffffff;
+    }
+    .modal-alert-text {
+      text-align: center;
+    }
+    .modal-alert-button {
+      text-transform: uppercase;
+
+      height: 33px;
+      background-color: #0d54a1;
+      color: #ffffff;
+
+      font-weight: 700;
+    }
+
+    .notification-wrapper {
+      font-family: "Arial";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      z-index: 1;
+    }
+    .notification-message {
+      position: relative;
+      top: 50px;
+      font-size: 36px;
+      border-radius: 26px;
+      padding: 33.6px 32px;
+      background-color: #e31f24;
+      color: white;
+    }
+
+    @media (orientation: portrait) {
+      .wrapper-orientation-alert {
+        display: flex;
+      }
+
+      body > *:not(.wrapper-orientation-alert) {
+        filter: blur(18px);
+      }
+    }
+
+    @media screen and (max-width: 1200px) {
+      .modal {
+        width: 55%;
+      }
+      .header-text {
+        font-size: 26.25px;
+      }
+      .header-close-button {
+        padding: 11.25px;
+        width: 27.5px;
+      }
+      .main-content-button {
+        width: 14.38px;
+        padding: 16.07px 20.09px 16.07px 22.1px;
+      }
+      .tab {
+        padding: 9.38px 12.5px;
+      }
+      .main {
+        font-size: 22.88px;
+        margin: 10px 0;
+      }
+      .notification-message {
+        font-size: 26.25px;
+      }
+      .modal-alert {
+        gap: 0;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      .modal {
+        width: 60%;
+      }
+      .main {
+        font-size: 20px;
+      }
+      .notification-message {
+        font-size: 20px;
+      }
+      .main-content-button {
+        padding: 13.74px 17.19px 13.74px 18.9px;
+      }
+      .tab {
+        padding: 8.02px, 10.7px;
+      }
+
+      .modal-content {
+        margin: 15px 20px;
+      }
+
+      .phone-img img {
+        width: 200px;
+      }
+
+      .modal-alert-container {
+        margin: 0 20px 20px 20px;
+      }
+      .modal-alert-text {
+        font-size: 18px;
+      }
+      .modal-alert-button {
+        font-size: 14px;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .modal {
+        width: 65%;
+      }
+      .modal-alert {
+        font-size: 25px;
+      }
+
+      .notification-message {
+        font-size: 16px;
+      }
+    }
   </style>
   <body style="margin: 0px; overflow: hidden">
+    <div class="wrapper-orientation-alert">
+      <div class="modal-alert">
+        <div class="phone-img">
+          <img src="phone.svg" />
+        </div>
+        <div class="modal-alert-container">
+          <div class="modal-alert-text">
+            Поверните телефон горизонтально и убедитесь, что метка с надписью AR
+            находится в поле зрения камеры
+          </div>
+          <button
+            class="modal-alert-button"
+            onclick="closeOrientationalModal()"
+          >
+            Понятно
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="wrapper">
       <div class="modal">
         <div class="modal-content">
@@ -180,44 +572,139 @@
           <div class="main">
             <div class="tabs">
               <div onclick="handleTab(0)" class="tab tab-active">
-                Первая вкладка
+                Техническая карта
               </div>
-              <div onclick="handleTab(1)" class="tab tab-inactive">
-                Вторая вкладка
-              </div>
+              <div onclick="handleTab(1)" class="tab tab-inactive">Каталог</div>
             </div>
             <div class="main-content">
               <div class="main-content-container">
-                <div class="main-content-item">
-                  <div
-                    class="main-content-text"
-                    onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
-                  >
-                    Технические характеристики автомобиля
-                  </div>
+                <!-- <div class="main-content-items">
+                  <div class="main-content-item">
+                    <div
+                      class="main-content-text"
+                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
+                    >
+                      Технические характеристики автомобиля
+                    </div>
 
-                  <img class="main-content-button" src="go.svg" alt="open md" />
-                </div>
-                <div
-                  class="main-content-item hidden-item"
+                    <img
+                      class="main-content-button"
+                      src="go.svg"
+                      alt="open md"
+                    />
+                  </div>
+                  <div class="main-content-item">
+                    <div
+                      class="main-content-text"
+                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
+                    >
+                      Ссылка 2
+                    </div>
+
+                    <img
+                      class="main-content-button"
+                      src="go.svg"
+                      alt="open md"
+                    />
+                  </div>
+                  <div class="main-content-item">
+                    <div
+                      class="main-content-text"
+                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
+                    >
+                      Ссылка 3
+                    </div>
+
+                    <img
+                      class="main-content-button"
+                      src="go.svg"
+                      alt="open md"
+                    />
+                  </div>
+                  <div class="main-content-item">
+                    <div
+                      class="main-content-text"
+                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
+                    >
+                      Ссылка 4
+                    </div>
+
+                    <img
+                      class="main-content-button"
+                      src="go.svg"
+                      alt="open md"
+                    />
+                  </div>
+                  <div class="main-content-item">
+                    <div
+                      class="main-content-text"
+                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
+                    >
+                      Ссылка 5
+                    </div>
+
+                    <img
+                      class="main-content-button"
+                      src="go.svg"
+                      alt="open md"
+                    />
+                  </div>
+                  <div class="main-content-item">
+                    <div
+                      class="main-content-text"
+                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
+                    >
+                      Ссылка 6
+                    </div>
+
+                    <img
+                      class="main-content-button"
+                      src="go.svg"
+                      alt="open md"
+                    />
+                  </div>
+                </div> -->
+                <!-- <div
+                  class="main-content-items hidden-item"
                   onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1953&m=41589&mod_date=2024-10-08')"
                 >
-                  <div class="main-content-text">
-                    Залить топливо в бак топливный основной
-                  </div>
+                  <div class="main-content-item">
+                    <div class="main-content-text">
+                      Залить топливо в бак топливный основной
+                    </div>
 
-                  <img class="main-content-button" src="go.svg" alt="open md" />
-                </div>
+                    <img
+                      class="main-content-button"
+                      src="go.svg"
+                      alt="open md"
+                    />
+                  </div>
+                  <div class="main-content-item">
+                    <div class="main-content-text">Ссылка 7</div>
+
+                    <img
+                      class="main-content-button"
+                      src="go.svg"
+                      alt="open md"
+                    />
+                  </div>
+                </div> -->
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="notification-wrapper">
+      <div class="notification-message">
+        Убедитесь, что QR-код находится в поле зрения камеры
+      </div>
+    </div>
     <a-scene
       embedded
-      arjs="sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;"
+      arjs="trackingMethod: best; sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;"
       cursor="fuse: false; rayOrigin: mouse;"
+      vr-mode-ui="enabled: false"
     >
       <a-assets>
         <img id="google" src="go.png" />
@@ -232,10 +719,15 @@
         cursor="fuse: false; rayOrigin: mouse;"
         id="markerA"
         markerhandler
+        smooth="true"
+        smoothCount="10"
+        smoothTolerance=".01"
+        smoothThreshold="5"
       >
-        <a-entity
+        >
+        <!-- <a-entity
           rotation="0 -90 0"
-          position="0.5 0 0"
+          position="3.88 -7.92 2.38"
           material="src: #info;"
           geometry="primitive: cylinder; height: 0.02; radius: 0.5"
           infocomponent
@@ -243,11 +735,41 @@
 
         <a-entity
           rotation="0 -90 0"
-          position="-2 0 0"
+          position="3.92 1.22 -3.76"
           material="src: #info;"
           geometry="primitive: cylinder; height: 0.02; radius: 0.5"
           infocomponent
+        ></a-entity> -->
+
+        <!-- <a-entity
+          rotation="0 90 90"
+          position="-2.15 0 -1.45"
+          material="src: #info;"
+          geometry="primitive: circle; radius: 0.2"
+          infocomponent
         ></a-entity>
+        <a-entity
+          rotation="0 90 90"
+          position="-2.15 0 1.25"
+          material="src: #info;"
+          geometry="primitive: circle; radius: 0.2"
+          infocomponent
+        ></a-entity>
+        <a-entity
+          rotation="0 90 90"
+          position="1.88 0 -1.45"
+          material="src: #info;"
+          geometry="primitive: circle; radius: 0.2"
+          infocomponent
+        ></a-entity>
+        <a-entity
+          rotation="0 90 90"
+          position="1.88 0 1.25"
+          material="src: #info;"
+          material="src: #info;"
+          geometry="primitive: circle; radius: 0.2"
+          infocomponent
+        ></a-entity> -->
       </a-marker>
 
       <a-entity camera></a-entity>
