@@ -104,7 +104,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      display: none;
+      display: flex;
       justify-content: flex-end;
       z-index: 2;
     }
@@ -173,7 +173,7 @@
       color: #0d54a1;
       display: flex;
       flex-direction: column;
-      border-radius: 4px;
+      border-radius: 0 0 4px 4px;
       flex-grow: 1;
       overflow-y: auto;
     }
@@ -246,19 +246,11 @@
       display: flex;
       gap: 40px;
       flex-direction: column;
-      background-color: #ffffff;
+      background-color: #0d54a1;
     }
     .modal-alert-text {
       text-align: center;
-    }
-    .modal-alert-button {
-      text-transform: uppercase;
-
-      height: 33px;
-      background-color: #0d54a1;
       color: #ffffff;
-
-      font-weight: 700;
     }
 
     .notification-wrapper {
@@ -354,9 +346,6 @@
       .modal-alert-text {
         font-size: 18px;
       }
-      .modal-alert-button {
-        font-size: 14px;
-      }
     }
 
     @media screen and (max-width: 600px) {
@@ -383,12 +372,6 @@
             Поверните телефон горизонтально и убедитесь, что метка с надписью AR
             находится в поле зрения камеры
           </div>
-          <button
-            class="modal-alert-button"
-            onclick="closeOrientationalModal()"
-          >
-            Понятно
-          </button>
         </div>
       </div>
     </div>
@@ -415,7 +398,7 @@
                 <div class="main-content-items">
                   <div
                     class="main-content-item"
-                    onclick="window.open('https://tds-test.itorum.ru/manage/viewer?p=2009&m=42212')"
+                    onclick="window.open('https://tds-test.itorum.ru/manage/viewer?p=2009&m=42212', '_blank')"
                   >
                     <div class="main-content-text">Главная страница БИС</div>
 
@@ -427,7 +410,7 @@
                   </div>
                   <div
                     class="main-content-item"
-                    onclick="window.open('https://tds-test.itorum.ru/manage/viewer?p=2009&m=42283')"
+                    onclick="window.open('https://tds-test.itorum.ru/manage/viewer?p=2009&m=42283', '_blank')"
                   >
                     <div class="main-content-text">
                       Окно управления климатической системой на экране БИС
@@ -442,7 +425,7 @@
                   <div class="main-content-item">
                     <div
                       class="main-content-text"
-                      onclick="window.open('https://tds-test.itorum.ru/manage/viewer?p=2009&m=42302')"
+                      onclick="window.open('https://tds-test.itorum.ru/manage/viewer?p=2009&m=42302', '_blank')"
                     >
                       Включение и выключение внутреннего освещения кабины с
                       помощью БИС 2.0 диагональ 15,6 дюйма
@@ -457,7 +440,7 @@
                 </div>
                 <div
                   class="main-content-items hidden-item"
-                  onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1953&m=41589&mod_date=2024-10-08')"
+                  onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1953&m=41589&mod_date=2024-10-08', '_blank')"
                 >
                   <div class="main-content-item">
                     <div class="main-content-text">
