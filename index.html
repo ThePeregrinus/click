@@ -32,110 +32,18 @@
       fetch("https://theperegrinus.github.io/pointsJSON/points.json")
         .then((res) => res.json())
         .then((res) => {
-          // i = 0;
-          // res.points.map((point) => {
-          //   const stringPoint = point.join(" ");
-          //   console.info(stringPoint);
-          //   const entity = document.createElement("a-entity");
-          //   entity.setAttribute("rotation", "-90 180 0");
-          //   entity.setAttribute("position", stringPoint);
-          //   entity.setAttribute("material", "src: #info");
-          //   entity.setAttribute("geometry", "primitive: circle; radius: 0.2");
-          //   entity.setAttribute("infocomponent", "");
-          //   entity.addEventListener("click", () => openModal());
-
-          //   marker.appendChild(entity);
-          // });
-
-          res = {
-            "Блок предохранителей": {
-              coordinates: {
-                x: 4.43,
-                y: -3.0,
-                z: 0.0,
-              },
-              "technical map": [
-                {
-                  title: "Опустить облицовочную панель кабины",
-                  code: "CODECODECODE",
-                },
-                {
-                  title: "Пример технической карты",
-                  code: "CODECODECODE",
-                },
-                {
-                  title: "Пример технической карты2",
-                  code: "CODECODECODE",
-                },
-              ],
-              catalog: [
-                {
-                  title: "Пример каталога",
-                  code: "CODECODECODE",
-                },
-                {
-                  title: "Пример каталога2",
-                  code: "CODECODECODE",
-                },
-              ],
-            },
-            "Колонка рулевого управления": {
-              coordinates: {
-                x: 0,
-                y: 0,
-                z: 0,
-              },
-              "technical map": [
-                {
-                  title: "Установить настил рамы грязевой средний",
-                  code: "SOMECODECODE",
-                },
-              ],
-              catalog: [
-                {
-                  title: "Замок",
-                  code: "C0DE",
-                },
-              ],
-            },
-          };
-          for (const key in res) {
-            if (res.hasOwnProperty(key)) {
-              const item = res[key];
-
-              const title = key;
-
-              const coords = `${item.coordinates.x} ${item.coordinates.y} ${item.coordinates.z}`;
-
-              const techmap = item["technical map"];
-
-              const catalog = item.catalog;
-
-              console.info(coords);
-              const entity = document.createElement("a-entity");
-              entity.setAttribute("rotation", "-90 180 0");
-              entity.setAttribute("position", coords);
-              entity.setAttribute("material", "src: #info");
-              entity.setAttribute("geometry", "primitive: circle; radius: 0.2");
-              entity.setAttribute("infocomponent", "");
-              entity.addEventListener("click", () => openModal(title, item));
-
-              marker.appendChild(entity);
-
-              // console.log(
-              //   "item",
-              //   item,
-              //   "title",
-              //   title,
-              //   "coords",
-              //   coords,
-              //   "techmap",
-              //   techmap,
-              //   "catalog",
-              //   catalog
-              // );
-            }
-          }
+          res = { points: [[0, 0, 0]] };
+          res.points.map((point) => {
+            const stringPoint = point.join(" ");
+            console.info(stringPoint);
+            const entity = document.createElement("a-entity");
+            entity.setAttribute("rotation", "-90 180 0");
+            entity.setAttribute("position", stringPoint);
+            entity.setAttribute("material", "src: #info");
+            entity.setAttribute("geometry", "primitive: circle; radius: 0.2");
+            entity.setAttribute("infocomponent", "");
+            marker.appendChild(entity);
+          });
         });
     };
 
@@ -143,79 +51,8 @@
       const modal = (document.querySelector(".wrapper").style.display = "none");
     }
 
-    function openModal(title, obj) {
+    function openModal() {
       const modal = (document.querySelector(".wrapper").style.display = "flex");
-
-      const headerText = document.querySelector(".header-text");
-      headerText.textContent = title;
-
-      const { "technical map": technicalMap, catalog } = obj;
-
-      // Create the main-content-items div
-      const mainContentItems = document.createElement("div");
-      mainContentItems.className = "main-content-items";
-
-      // Create main content item div
-
-      for (let i = 0; i < 5; i++) {
-        const mainContentItem = document.createElement("div");
-        mainContentItem.className = "main-content-item";
-
-        // Create the main-content-text div
-        const mainContentText = document.createElement("div");
-        mainContentText.className = "main-content-text";
-        mainContentText.textContent = "Технические характеристики автомобиля";
-        mainContentText.onclick = () => {
-          window.open("https://example.com");
-        };
-
-        // Create the main-content-button img
-        const mainContentButton = document.createElement("img");
-        mainContentButton.className = "main-content-button";
-        mainContentButton.src = "go.svg";
-        mainContentButton.alt = "open md";
-
-        // Append the text and image to the main-content-item div
-        mainContentItem.appendChild(mainContentText);
-        mainContentItem.appendChild(mainContentButton);
-
-        mainContentItems.append(mainContentItem);
-      }
-      // Append the main-content-item to the body or any other container
-      const container = document.querySelector(".main-content-container");
-      container.appendChild(mainContentItems);
-
-      //----------------------------------catalog
-
-      const mainHiddenContentItems = document.createElement("div");
-      mainHiddenContentItems.className = "main-content-items hidden-item";
-      for (let i = 0; i < 5; i++) {
-        const mainContentItem = document.createElement("div");
-        mainContentItem.className = "main-content-item";
-
-        // Create the main-content-text div
-        const mainContentText = document.createElement("div");
-        mainContentText.className = "main-content-text";
-        mainContentText.textContent = "Каталог";
-        mainContentText.onclick = () => {
-          window.open("https://example.com");
-        };
-
-        // Create the main-content-button img
-        const mainContentButton = document.createElement("img");
-        mainContentButton.className = "main-content-button";
-        mainContentButton.src = "go.svg";
-        mainContentButton.alt = "open md";
-
-        // Append the text and image to the main-content-item div
-        mainContentItem.appendChild(mainContentText);
-        mainContentItem.appendChild(mainContentButton);
-
-        mainHiddenContentItems.append(mainContentItem);
-      }
-
-      container.appendChild(mainHiddenContentItems);
-      console.log(technicalMap, catalog);
     }
 
     function handleTab(tabIndex) {
@@ -249,12 +86,10 @@
     AFRAME.registerComponent("infocomponent", {
       schema: {
         link: { type: "string", default: "" },
-        name: { type: "string", default: "herohoehero" },
       },
 
       init: function () {
-        console.log(this.el);
-        // this.el.addEventListener("click", () => openModal(this.data.name));
+        this.el.addEventListener("click", openModal);
       },
     });
   </script>
@@ -546,7 +381,7 @@
         <div class="modal-alert-container">
           <div class="modal-alert-text">
             Поверните телефон горизонтально и убедитесь, что метка с надписью AR
-            находится в поле зрения камеры
+            находится в поле зрения камеры
           </div>
           <button
             class="modal-alert-button"
@@ -572,19 +407,18 @@
           <div class="main">
             <div class="tabs">
               <div onclick="handleTab(0)" class="tab tab-active">
-                Техническая карта
+                Руководство по эксплуатации
               </div>
-              <div onclick="handleTab(1)" class="tab tab-inactive">Каталог</div>
             </div>
             <div class="main-content">
               <div class="main-content-container">
-                <!-- <div class="main-content-items">
+                <div class="main-content-items">
                   <div class="main-content-item">
                     <div
                       class="main-content-text"
-                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
+                      onclick="window.open('https://tds-test.itorum.ru/manage/viewer?p=2009&m=42212')"
                     >
-                      Технические характеристики автомобиля
+                      Главная страница БИС
                     </div>
 
                     <img
@@ -596,9 +430,9 @@
                   <div class="main-content-item">
                     <div
                       class="main-content-text"
-                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
+                      onclick="window.open('https://tds-test.itorum.ru/manage/viewer?p=2009&m=42283')"
                     >
-                      Ссылка 2
+                      Окно управления климатической системой на экране БИС
                     </div>
 
                     <img
@@ -610,9 +444,10 @@
                   <div class="main-content-item">
                     <div
                       class="main-content-text"
-                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
+                      onclick="window.open('https://tds-test.itorum.ru/manage/viewer?p=2009&m=42283')"
                     >
-                      Ссылка 3
+                      Включение и выключение внутреннего освещения кабины с
+                      помощью БИС 2.0 диагональ 15,6 дюйма
                     </div>
 
                     <img
@@ -621,50 +456,8 @@
                       alt="open md"
                     />
                   </div>
-                  <div class="main-content-item">
-                    <div
-                      class="main-content-text"
-                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
-                    >
-                      Ссылка 4
-                    </div>
-
-                    <img
-                      class="main-content-button"
-                      src="go.svg"
-                      alt="open md"
-                    />
-                  </div>
-                  <div class="main-content-item">
-                    <div
-                      class="main-content-text"
-                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
-                    >
-                      Ссылка 5
-                    </div>
-
-                    <img
-                      class="main-content-button"
-                      src="go.svg"
-                      alt="open md"
-                    />
-                  </div>
-                  <div class="main-content-item">
-                    <div
-                      class="main-content-text"
-                      onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1915&m=38312&mod_date=2024-10-08')"
-                    >
-                      Ссылка 6
-                    </div>
-
-                    <img
-                      class="main-content-button"
-                      src="go.svg"
-                      alt="open md"
-                    />
-                  </div>
-                </div> -->
-                <!-- <div
+                </div>
+                <div
                   class="main-content-items hidden-item"
                   onclick="window.open('https://tds-test.itorum.ru/search/viewer?p=1953&m=41589&mod_date=2024-10-08')"
                 >
@@ -688,7 +481,7 @@
                       alt="open md"
                     />
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
