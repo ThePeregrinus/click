@@ -27,10 +27,8 @@
       let vin = null;
       if (params.has("vin")) vin = params.get("vin");
 
-      if (vin) {
-        fetch(
-          `${endpoint}/api/on_board_information_system/augmented_reality_coordinates?vin=${vin}`
-        )
+      if (vin || 1) {
+        fetch(`https://theperegrinus.github.io/pointsJSON/points.json`)
           .then((res) => res.json())
           .then((res) => {
             for (const key in res) {
